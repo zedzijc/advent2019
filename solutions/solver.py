@@ -1,7 +1,7 @@
-from solutions.day1.day1_solution import compute_required_fuel
+from solutions.day1.day1_solution import get_required_fuel, get_total_required_fuel
 
 
-solutions = {1: {1: compute_required_fuel},
+solutions = {1: {1: get_required_fuel, 2: get_total_required_fuel},
              2: {},
              3: {},
              4: {},
