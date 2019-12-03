@@ -11,6 +11,15 @@ class Coordinate(object):
         return self.y
 
 
+def smaller_than(a, b):
+    """
+    Smaller than function that treats comparison to None as True
+    """
+    if b is None:
+        return True
+    return a < b
+
+
 def strings_to_integers(strings):
     return [int(string) for string in strings]
 
