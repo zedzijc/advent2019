@@ -8,7 +8,7 @@ def parse_arguments():
                         help="A calendar day")
     parser.add_argument("puzzle", type=int, choices=range(1, 3),
                         help="A daily puzzle")
-    parser.add_argument("input", type=str, help="Puzzle input")
+    parser.add_argument("--input", type=str, help="Puzzle input")
     args = parser.parse_args()
     solver.solve(args.day, args.puzzle, args.input)
 
