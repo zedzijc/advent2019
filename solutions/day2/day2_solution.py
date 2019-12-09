@@ -33,7 +33,7 @@ def _process_intcode(intcode):
 
 
 def _get_intcode(puzzle_input):
-    return (strings_to_integers(parse_csv_to_list(puzzle_input)[0]))
+    return strings_to_integers(parse_csv_to_list(puzzle_input)[0])
 
 
 def get_intcode_value(puzzle_input):
@@ -44,9 +44,10 @@ def get_intcode_value(puzzle_input):
 
 def get_moon_gravity_assist(puzzle_input):
     original_intcode = _get_intcode(puzzle_input)
-    for noun in range (0, 100):
-        for verb in range (0, 100):
+    for noun in range(0, 100):
+        for verb in range(0, 100):
             intcode = original_intcode.copy()
             _restore_gravity_assist_program(intcode, noun, verb)
             if (_process_intcode(intcode.copy()) == 19690720):
-                print("Moon gravity assist result: {0}".format(100 * noun + verb))
+                print("Moon gravity assist result: {0}".format(
+                    100 * noun + verb))

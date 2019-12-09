@@ -21,7 +21,13 @@ def smaller_than(a, b):
 
 
 def strings_to_integers(strings):
-    return [int(string) for string in strings]
+    integers = []
+    for string in strings:
+        try:
+            integers.append(int(string))
+        except TypeError:
+            pass
+    return integers
 
 
 def get_manhattan_distance(from_coordinate, to_coordinate=Coordinate(0, 0)):
