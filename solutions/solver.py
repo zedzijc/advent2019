@@ -2,7 +2,7 @@ from solutions.day1.day1_solution import get_required_fuel, get_total_required_f
 from solutions.day2.day2_solution import get_intcode_value, get_moon_gravity_assist
 from solutions.day3.day3_solution import find_most_central_intersection, find_shortest_wiring_distance
 from solutions.day4.day4_solution import get_possible_passwords, get_limited_passwords
-from solutions.day5.day5_solution import get_intcode_diagnostic_codes
+from solutions.day5.day5_solution import get_intcode_diagnostic_codes_a, get_intcode_diagnostic_codes_b
 
 
 solutions = {1: {1: get_required_fuel,
@@ -13,7 +13,8 @@ solutions = {1: {1: get_required_fuel,
                  2: find_shortest_wiring_distance},
              4: {1: get_possible_passwords,
                  2: get_limited_passwords},
-             5: {1: get_intcode_diagnostic_codes},
+             5: {1: get_intcode_diagnostic_codes_a,
+                 2: get_intcode_diagnostic_codes_b},
              6: {},
              7: {},
              8: {},

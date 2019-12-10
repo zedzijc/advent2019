@@ -23,15 +23,18 @@ def _parameter_modes(opcodes):
         return parameter_modes
 
 
-def _process_intcode(intcode):
+def _process_intcode(intcode, input_value):
     """
     Processes a series of instructions.
     Allows for intcodes of various lengths according to day 5 requirements.
     """
+    single_params = [3, 4]
+    double_params = [5, 6]
+    triple_params = [1, 2, 7, 8]
     index = 0
-    while index + 3 < len(intcode):
+    while index < len(intcode):
         operator = _get_operator(intcode[index])
-        if operator == 1 or operator == 2:
+        if operator in triple_params or operator in double_params:
             code_size = 4
             parameter_modes = _parameter_modes(intcode[index])
             parameters = [intcode[index + 1],
@@ -41,16 +44,34 @@ def _process_intcode(intcode):
                        else intcode[parameters[0]])
             value_b = (parameters[1] if parameter_modes[1] == 1
                        else intcode[parameters[1]])
-            if operator == 1:
-                intcode[parameters[2]] = value_a + value_b
-            else:
-                intcode[parameters[2]] = value_a * value_b
-        elif operator == 3 or operator == 4:
+            if operator in triple_params:
+                value_c = 0
+                if operator == 1:
+                    value_c = value_a + value_b
+                elif operator == 2:
+                    value_c = value_a * value_b
+                elif operator == 7:
+                    if value_a < value_b:
+                        value_c = 1
+                else:
+                    if value_a == value_b:
+                        value_c = 1
+                intcode[parameters[2]] = value_c
+            elif operator in double_params:
+                code_size = 3
+                if operator == 5:
+                    if value_a != 0:
+                        index = value_b
+                        continue
+                elif operator == 6:
+                    if value_a == 0:
+                        index = value_b
+                        continue
+        elif operator in single_params:
             code_size = 2
             value_a = intcode[index + 1]
             if operator == 3:
-                # The only input instruction has value 1 as per puzzle info.
-                intcode[value_a] = 1
+                intcode[value_a] = input_value
             elif operator == 4:
                 parameter_modes = _parameter_modes(intcode[index])
                 if parameter_modes[0] == 1:
@@ -59,7 +80,7 @@ def _process_intcode(intcode):
                     diagnostic_code = intcode[value_a]
                 print("Diagnostic code: {0}".format(diagnostic_code))
         elif operator == 99:
-            return
+            return intcode[0]
         else:
             raise RuntimeError("Unsupported intcode operator: {0}".format(
                 operator))
@@ -73,6 +94,14 @@ def _get_intcodes(puzzle_input):
     return intcodes
 
 
-def get_intcode_diagnostic_codes(puzzle_input):
+def _get_diagnostic_codes(puzzle_input, input_value):
     for intcode in _get_intcodes(puzzle_input):
-        _process_intcode(intcode)
+        _process_intcode(intcode, input_value)
+
+
+def get_intcode_diagnostic_codes_a(puzzle_input):
+    _get_diagnostic_codes(puzzle_input, 1)
+
+
+def get_intcode_diagnostic_codes_b(puzzle_input):
+    _get_diagnostic_codes(puzzle_input, 5)
